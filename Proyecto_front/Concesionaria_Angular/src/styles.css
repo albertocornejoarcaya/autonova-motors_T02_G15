@@ -1,0 +1,457 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+:root {
+	--sidebar-bg: #1e293b;
+	--sidebar-active: #0284c7;
+	--sidebar-muted: #94a3b8;
+	--body-bg: #f8fafc;
+	--border-light: #e2e8f0;
+	--text-main: #0f172a;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	min-height: 0;
+	margin: 0;
+	background: var(--body-bg);
+	color: var(--text-main);
+	font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+app-root,
+app-shell {
+	display: block;
+	width: 100%;
+	height: 100%;
+	min-height: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	overflow: hidden;
+}
+
+.app-frame {
+	display: flex;
+	width: 100%;
+	height: 100dvh;
+	min-height: 0;
+	min-width: 0;
+	align-items: stretch;
+	overflow: hidden;
+}
+
+.sidebar {
+	display: flex;
+	flex: 0 0 250px;
+	flex-direction: column;
+	width: 250px;
+	height: 100%;
+	min-height: 0;
+	padding: 1rem;
+	overflow-y: auto;
+	color: #fff;
+	background: var(--sidebar-bg);
+}
+
+.sidebar-brand {
+	display: flex;
+	align-items: center;
+	gap: .6rem;
+	margin: 0 .25rem 1.5rem;
+}
+
+.brand-box-icon {
+	display: grid;
+	width: 34px;
+	height: 34px;
+	flex: 0 0 34px;
+	place-items: center;
+	border-radius: 6px;
+	background: var(--sidebar-active);
+	color: white;
+	font-size: 1.1rem;
+}
+
+.sidebar-brand strong,
+.sidebar-brand small {
+	display: block;
+}
+
+.sidebar-brand strong {
+	font-size: .9rem;
+	line-height: 1.2;
+}
+
+.sidebar-brand small,
+.sidebar-muted {
+	color: var(--sidebar-muted);
+	font-size: .725rem;
+}
+
+.sidebar-section {
+	display: block;
+	margin: 1rem 0 .25rem;
+	padding: 0 10px;
+	color: var(--sidebar-muted);
+	font-size: .65rem;
+	font-weight: 700;
+	letter-spacing: .05em;
+}
+
+.sidebar-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.sidebar-item {
+	display: flex;
+	min-height: 36px;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 12px;
+	border-radius: 6px;
+	color: #cbd5e1;
+	font-size: .85rem;
+	font-weight: 500;
+	text-decoration: none;
+	transition: background-color .15s ease, color .15s ease;
+}
+
+.sidebar-item i {
+	width: 16px;
+	text-align: center;
+	font-size: .95rem;
+}
+
+.sidebar-item:hover {
+	color: #fff;
+	background: rgb(255 255 255 / 5%);
+}
+
+.sidebar-item.active {
+	color: #fff;
+	background: var(--sidebar-active);
+	font-weight: 600;
+}
+
+.main-wrapper {
+	display: flex;
+	min-width: 0;
+	min-height: 0;
+	height: 100%;
+	flex: 1;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.top-navbar {
+	display: flex;
+	height: 55px;
+	min-height: 55px;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: .5rem 1.5rem;
+	border-bottom: 1px solid var(--border-light);
+	background: #fff;
+}
+
+.breadcrumb-label {
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	color: #64748b;
+	font-size: .85rem;
+}
+
+.breadcrumb-label i {
+	color: var(--sidebar-active);
+}
+
+.user-tools {
+	display: flex;
+	align-items: center;
+	gap: .75rem;
+}
+
+.system-status {
+	padding: .3rem .5rem;
+	border: 1px solid var(--border-light);
+	border-radius: 4px;
+	background: #f8fafc;
+	color: #334155;
+	font-size: .725rem;
+	white-space: nowrap;
+}
+
+.user-identity {
+	text-align: right;
+	line-height: 1.2;
+}
+
+.user-identity strong,
+.user-identity small {
+	display: block;
+	font-size: .725rem;
+}
+
+.user-identity small {
+	color: #64748b;
+}
+
+.avatar-circle {
+	display: grid;
+	width: 32px;
+	height: 32px;
+	place-items: center;
+	border-radius: 50%;
+	background: var(--sidebar-active);
+	color: white;
+}
+
+.logout-button {
+	display: grid;
+	width: 32px;
+	height: 32px;
+	place-items: center;
+	border: 1px solid #cbd5e1;
+	border-radius: 4px;
+	background: #fff;
+	color: #475569;
+	text-decoration: none;
+}
+
+.content-body {
+	min-height: 0;
+	flex: 1;
+	padding: 1.5rem;
+	overflow-y: auto;
+	background: var(--body-bg);
+}
+
+.app-footer {
+	min-height: 38px;
+	padding: .55rem 1.5rem;
+	border-top: 1px solid var(--border-light);
+	background: #fff;
+	color: #64748b;
+	font-size: .725rem;
+}
+
+/* ---------- Tema Bootstrap (color corporativo) ---------- */
+:root {
+	--bs-primary: #0284c7;
+	--bs-primary-rgb: 2, 132, 199;
+	--bs-link-color: #0284c7;
+	--bs-link-hover-color: #0369a1;
+	--bs-body-font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.btn-primary {
+	--bs-btn-bg: #0284c7;
+	--bs-btn-border-color: #0284c7;
+	--bs-btn-hover-bg: #0369a1;
+	--bs-btn-hover-border-color: #0369a1;
+	--bs-btn-active-bg: #075985;
+	--bs-btn-active-border-color: #075985;
+	--bs-btn-disabled-bg: #0284c7;
+	--bs-btn-disabled-border-color: #0284c7;
+}
+
+.btn-outline-primary {
+	--bs-btn-color: #0284c7;
+	--bs-btn-border-color: #0284c7;
+	--bs-btn-hover-bg: #0284c7;
+	--bs-btn-hover-border-color: #0284c7;
+	--bs-btn-active-bg: #0369a1;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+	border-color: #0284c7;
+	box-shadow: 0 0 0 .2rem rgb(2 132 199 / 18%);
+}
+
+.form-check-input:checked {
+	background-color: #0284c7;
+	border-color: #0284c7;
+}
+
+.form-label {
+	margin-bottom: .3rem;
+	color: #475569;
+	font-size: .78rem;
+	font-weight: 600;
+}
+
+/* ---------- Componentes comunes de las vistas ---------- */
+.page-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: .75rem;
+	margin-bottom: 1rem;
+}
+
+.page-header h1 {
+	margin: 0;
+	color: #0f172a;
+	font-size: 1.45rem;
+	font-weight: 700;
+}
+
+.page-header p {
+	margin: .2rem 0 0;
+	color: #64748b;
+	font-size: .85rem;
+}
+
+.card {
+	border-color: var(--border-light);
+	box-shadow: 0 1px 3px rgb(15 23 42 / 7%);
+}
+
+.card-header {
+	background: #fff;
+	border-bottom-color: var(--border-light);
+}
+
+.card-title {
+	color: #0f172a;
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+.table > thead th {
+	background: #f8fafc;
+	color: #475569;
+	font-size: .7rem;
+	font-weight: 700;
+	letter-spacing: .02em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.table td {
+	font-size: .875rem;
+}
+
+.metric-label {
+	color: #64748b;
+	font-size: .68rem;
+	font-weight: 700;
+	letter-spacing: .02em;
+}
+
+.metric-value {
+	color: #0f172a;
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.icon-tile {
+	display: grid;
+	width: 34px;
+	height: 34px;
+	place-items: center;
+	border-radius: 8px;
+	background: #e0f2fe;
+	color: #0284c7;
+}
+
+.vin {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: .75rem;
+}
+
+.vehicle-image {
+	height: 180px;
+	overflow: hidden;
+	background: #e2e8f0;
+}
+
+.vehicle-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.nav-pills {
+	--bs-nav-pills-link-active-bg: #0284c7;
+	--bs-nav-link-color: #0284c7;
+	--bs-nav-link-hover-color: #0369a1;
+}
+
+.vehicle-specs {
+	font-size: .7rem;
+}
+
+@media (max-width: 760px) {
+	body {
+		overflow: auto;
+	}
+
+	.app-frame {
+		height: auto;
+		min-height: 100dvh;
+		flex-direction: column;
+		overflow: visible;
+	}
+
+	.sidebar {
+		width: 100%;
+		height: auto;
+		flex: none;
+		padding: .75rem 1rem;
+		overflow: visible;
+	}
+
+	.sidebar-brand {
+		margin-bottom: .7rem;
+	}
+
+	.sidebar-section {
+		display: none;
+	}
+
+	.sidebar-nav {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.main-wrapper {
+		min-height: calc(100vh - 150px);
+		overflow: visible;
+	}
+
+	.top-navbar {
+		height: auto;
+		min-height: 55px;
+		padding: .6rem 1rem;
+	}
+
+	.system-status {
+		display: none;
+	}
+
+	.content-body {
+		padding: 1rem;
+		overflow: visible;
+	}
+
+	.app-footer {
+		padding-inline: 1rem;
+	}
+}

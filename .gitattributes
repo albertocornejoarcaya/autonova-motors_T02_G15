@@ -1,0 +1,7 @@
+# Normaliza los finales de línea en el repositorio (LF) y evita cambios falsos entre Windows/Linux
+* text=auto
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ico binary
+*.png binary
+*.jpg binary

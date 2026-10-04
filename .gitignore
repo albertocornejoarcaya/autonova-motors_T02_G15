@@ -1,0 +1,33 @@
+# ---- Java / Maven (backend) ----
+target/
+*.class
+*.log
+hs_err_pid*
+
+# Base de datos H2 local (contiene usuarios y datos de prueba; se regenera al iniciar)
+Proyecto_back/Concesionaria_spring/data/
+*.mv.db
+*.trace.db
+
+# ---- Angular / Node (frontend) ----
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+
+# ---- IDEs y sistema operativo ----
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Entregables del curso (no forman parte del código) ----
+*.zip
+*.docx
+~$*
