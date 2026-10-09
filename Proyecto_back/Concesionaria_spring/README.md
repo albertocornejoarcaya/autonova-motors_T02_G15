@@ -38,6 +38,18 @@ API disponible en:
 http://127.0.0.1:8081/api
 ```
 
+Documentación interactiva Swagger UI:
+
+```text
+http://127.0.0.1:8081/swagger-ui/index.html
+```
+
+Especificación OpenAPI en JSON:
+
+```text
+http://127.0.0.1:8081/v3/api-docs
+```
+
 Para ejecutar las pruebas:
 
 ```powershell

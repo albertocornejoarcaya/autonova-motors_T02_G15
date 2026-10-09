@@ -80,6 +80,17 @@ class ApiIntegrationTest {
     }
 
     @Test
+    void swaggerUiAndOpenApiSpecificationAreAvailable() {
+        ResponseEntity<String> swaggerUi = rest.getForEntity(url("/swagger-ui/index.html"), String.class);
+        ResponseEntity<String> openApi = rest.getForEntity(url("/v3/api-docs"), String.class);
+
+        assertThat(swaggerUi.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(swaggerUi.getBody()).contains("Swagger UI");
+        assertThat(openApi.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(openApi.getBody()).contains("\"openapi\"", "\"/api/clients\"");
+    }
+
+    @Test
     void userManagementRequiresAdminSession() {
         ResponseEntity<String> anonymousResponse = rest.getForEntity(url("/api/users"), String.class);
         assertThat(anonymousResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
