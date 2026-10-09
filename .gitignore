@@ -6,7 +6,6 @@ hs_err_pid*
 
 # Base de datos H2 local (contiene usuarios y datos de prueba; se regenera al iniciar)
 Proyecto_back/Concesionaria_spring/data/
-*.mv.db
 *.trace.db
 
 # ---- Angular / Node (frontend) ----

@@ -1,9 +1,9 @@
 package com.concesionaria.backend.config;
 
-import com.concesionaria.backend.client.Client;
-import com.concesionaria.backend.client.ClientRepository;
-import com.concesionaria.backend.vehicle.Vehicle;
-import com.concesionaria.backend.vehicle.VehicleRepository;
+import com.concesionaria.backend.client.entity.Client;
+import com.concesionaria.backend.client.repository.ClientRepository;
+import com.concesionaria.backend.vehicle.entity.Vehicle;
+import com.concesionaria.backend.vehicle.repository.VehicleRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.boot.CommandLineRunner;

@@ -2,19 +2,24 @@ package com.concesionaria.backend;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.concesionaria.backend.client.ClientResponse;
-import com.concesionaria.backend.client.Client;
-import com.concesionaria.backend.client.ClientRepository;
-import com.concesionaria.backend.reservation.CreateReservationRequest;
-import com.concesionaria.backend.reservation.ReservationRepository;
-import com.concesionaria.backend.reservation.ReservationResponse;
-import com.concesionaria.backend.user.LoginRequest;
-import com.concesionaria.backend.user.StaffUser;
-import com.concesionaria.backend.user.StaffUserRepository;
-import com.concesionaria.backend.user.UpdateStaffUserRequest;
-import com.concesionaria.backend.vehicle.VehicleResponse;
-import com.concesionaria.backend.vehicle.Vehicle;
-import com.concesionaria.backend.vehicle.VehicleRepository;
+import com.concesionaria.backend.client.dto.ClientResponse;
+import com.concesionaria.backend.client.dto.CreateClientRequest;
+import com.concesionaria.backend.client.entity.Client;
+import com.concesionaria.backend.client.repository.ClientRepository;
+import com.concesionaria.backend.reservation.dto.CreateReservationRequest;
+import com.concesionaria.backend.reservation.repository.ReservationRepository;
+import com.concesionaria.backend.sale.dto.CreateSaleRequest;
+import com.concesionaria.backend.sale.dto.SaleResponse;
+import com.concesionaria.backend.reservation.dto.ReservationResponse;
+import com.concesionaria.backend.reservation.dto.UpdateReservationDateRequest;
+import com.concesionaria.backend.user.dto.CreateStaffUserRequest;
+import com.concesionaria.backend.user.dto.LoginRequest;
+import com.concesionaria.backend.user.entity.StaffUser;
+import com.concesionaria.backend.user.repository.StaffUserRepository;
+import com.concesionaria.backend.user.dto.UpdateStaffUserRequest;
+import com.concesionaria.backend.vehicle.dto.VehicleResponse;
+import com.concesionaria.backend.vehicle.entity.Vehicle;
+import com.concesionaria.backend.vehicle.repository.VehicleRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
@@ -147,7 +152,7 @@ class ApiIntegrationTest {
         headers.add(HttpHeaders.COOKIE, setCookie.split(";", 2)[0]);
 
         ResponseEntity<String> createResponse = rest.exchange(url("/api/users"), HttpMethod.POST,
-                new HttpEntity<>(new com.concesionaria.backend.user.CreateStaffUserRequest(
+                new HttpEntity<>(new CreateStaffUserRequest(
                         "New", "Staff", "11223344", "new.staff@test.local", "Password123", 2, true), headers),
                 String.class);
 
@@ -164,7 +169,7 @@ class ApiIntegrationTest {
         headers.add(HttpHeaders.COOKIE, setCookie.split(";", 2)[0]);
 
         ResponseEntity<ClientResponse> clientResponse = rest.postForEntity(url("/api/clients"),
-                new com.concesionaria.backend.client.CreateClientRequest("Test", "Customer", "87654321",
+                new CreateClientRequest("Test", "Customer", "87654321",
                         "999000111", "customer@test.local", "Lima"), ClientResponse.class);
         assertThat(clientResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(clientResponse.getBody()).isNotNull();
@@ -189,29 +194,29 @@ class ApiIntegrationTest {
 
         ResponseEntity<ReservationResponse> updatedReservation = rest.exchange(
                 url("/api/reservations/" + reservationResponse.getBody().id() + "/date"), HttpMethod.PUT,
-                new HttpEntity<>(new com.concesionaria.backend.reservation.UpdateReservationDateRequest(
+                new HttpEntity<>(new UpdateReservationDateRequest(
                         LocalDate.of(2026, 10, 8)), headers), ReservationResponse.class);
         assertThat(updatedReservation.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(updatedReservation.getBody().reservationDate()).isEqualTo(LocalDate.of(2026, 10, 8));
 
         var finalAmount = new java.math.BigDecimal("37500.00");
-        ResponseEntity<com.concesionaria.backend.sale.SaleResponse> saleResponse = rest.exchange(
+        ResponseEntity<SaleResponse> saleResponse = rest.exchange(
                 url("/api/sales"), HttpMethod.POST,
-                new HttpEntity<>(new com.concesionaria.backend.sale.CreateSaleRequest(
+                new HttpEntity<>(new CreateSaleRequest(
                         reservationResponse.getBody().id(), finalAmount), headers),
-                com.concesionaria.backend.sale.SaleResponse.class);
+                SaleResponse.class);
         assertThat(saleResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(saleResponse.getBody().finalAmount()).isEqualByComparingTo(finalAmount);
         assertThat(saleResponse.getBody().sellerId())
                 .isEqualTo(users.findByEmailIgnoreCase("admin@test.local").orElseThrow().getId());
         assertThat(reservations.findById(reservationResponse.getBody().id()).orElseThrow().getStatus())
                 .isEqualTo("Concretada");
-        ResponseEntity<com.concesionaria.backend.sale.SaleResponse[]> salesResponse = rest.exchange(
+        ResponseEntity<SaleResponse[]> salesResponse = rest.exchange(
                 url("/api/sales"), HttpMethod.GET, new HttpEntity<>(headers),
-                com.concesionaria.backend.sale.SaleResponse[].class);
+                SaleResponse[].class);
         assertThat(salesResponse.getBody()).hasSize(1);
         ResponseEntity<String> duplicateSale = rest.exchange(url("/api/sales"), HttpMethod.POST,
-                new HttpEntity<>(new com.concesionaria.backend.sale.CreateSaleRequest(
+                new HttpEntity<>(new CreateSaleRequest(
                         reservationResponse.getBody().id(), finalAmount), headers), String.class);
         assertThat(duplicateSale.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
 
@@ -296,7 +301,7 @@ class ApiIntegrationTest {
     @Test
     void invalidClientReturnsReadableSpanishError() {
         ResponseEntity<String> response = rest.postForEntity(url("/api/clients"),
-                new com.concesionaria.backend.client.CreateClientRequest("Bad", "Dni", "123",
+                new CreateClientRequest("Bad", "Dni", "123",
                         "999000111", "bad.dni@test.local", "Lima"), String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).contains("\"message\"", "dni", "8 dígitos");

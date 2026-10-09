@@ -1,12 +1,13 @@
 package com.concesionaria.backend.common;
 
-import com.concesionaria.backend.client.Client;
-import com.concesionaria.backend.client.ClientRepository;
-import com.concesionaria.backend.user.StaffUser;
-import com.concesionaria.backend.user.StaffUserRepository;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+
+import com.concesionaria.backend.client.entity.Client;
+import com.concesionaria.backend.client.repository.ClientRepository;
+import com.concesionaria.backend.user.entity.StaffUser;
+import com.concesionaria.backend.user.repository.StaffUserRepository;
 
 /**
  * Resuelve nombres legibles de clientes y usuarios para enriquecer las respuestas
