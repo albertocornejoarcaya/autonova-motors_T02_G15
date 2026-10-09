@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record CreateClientRequest(@NotBlank String firstName, @NotBlank String lastName,
-                                  @NotBlank @Pattern(regexp = "[0-9]{8}") String dni,
+                                  @NotBlank @Pattern(regexp = "[0-9]{8}", message = "debe tener 8 dígitos") String dni,
                                   @NotBlank String phone, @NotBlank @Email String email,
                                   String address) {
     public Client toEntity() {

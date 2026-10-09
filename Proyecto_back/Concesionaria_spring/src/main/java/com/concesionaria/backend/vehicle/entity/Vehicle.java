@@ -84,4 +84,11 @@ public class Vehicle {
             status = "Disponible";
         }
     }
+
+    public void markSold() {
+        if (stock != 0 || !"Reservado".equalsIgnoreCase(status)) {
+            throw new IllegalStateException("Vehicle is not reserved for sale");
+        }
+        status = "Vendido";
+    }
 }

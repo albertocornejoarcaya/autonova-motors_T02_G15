@@ -40,6 +40,7 @@ public class SaleServiceImpl implements SaleService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
         try {
             reservation.markCompleted();
+            reservation.getVehicle().markSold();
         } catch (IllegalStateException exception) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, exception.getMessage());
         }
