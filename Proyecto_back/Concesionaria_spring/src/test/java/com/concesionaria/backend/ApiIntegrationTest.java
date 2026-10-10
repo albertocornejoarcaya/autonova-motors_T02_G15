@@ -203,6 +203,12 @@ class ApiIntegrationTest {
         assertThat(reservationListResponse.getBody()).extracting(ReservationResponse::reservationDate)
                 .contains(LocalDate.of(2026, 10, 1));
 
+        ResponseEntity<String> duplicateWhilePending = rest.exchange(url("/api/reservations"), HttpMethod.POST,
+                new HttpEntity<>(new CreateReservationRequest("3TMAZ5CN8KM104928",
+                        clientResponse.getBody().id(), LocalDate.of(2026, 10, 1), true,
+                        "Duplicate pending reservation"), headers), String.class);
+        assertThat(duplicateWhilePending.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+
         ResponseEntity<ReservationResponse> updatedReservation = rest.exchange(
                 url("/api/reservations/" + reservationResponse.getBody().id() + "/date"), HttpMethod.PUT,
                 new HttpEntity<>(new UpdateReservationDateRequest(
@@ -231,14 +237,21 @@ class ApiIntegrationTest {
                         reservationResponse.getBody().id(), finalAmount), headers), String.class);
         assertThat(duplicateSale.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
 
-        var reservedVehicle = vehicles.findById("3TMAZ5CN8KM104928").orElseThrow();
-        assertThat(reservedVehicle.getStock()).isZero();
-        assertThat(reservedVehicle.getStatus()).isEqualTo("Vendido");
+        var availableVehicle = vehicles.findById("3TMAZ5CN8KM104928").orElseThrow();
+        assertThat(availableVehicle.getStock()).isEqualTo(1);
+        assertThat(availableVehicle.getStatus()).isEqualTo("Disponible");
+
+        ResponseEntity<ReservationResponse> secondReservation = rest.exchange(url("/api/reservations"),
+                HttpMethod.POST,
+                new HttpEntity<>(new CreateReservationRequest("3TMAZ5CN8KM104928",
+                        clientResponse.getBody().id(), LocalDate.of(2026, 10, 1), true,
+                        "Reservation after completion"), headers), ReservationResponse.class);
+        assertThat(secondReservation.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         ResponseEntity<String> duplicateReservation = rest.exchange(url("/api/reservations"), HttpMethod.POST,
                 new HttpEntity<>(new CreateReservationRequest("3TMAZ5CN8KM104928",
                         clientResponse.getBody().id(), LocalDate.of(2026, 10, 1), true,
-                        "Duplicate reservation"), headers), String.class);
+                        "Duplicate pending reservation"), headers), String.class);
         assertThat(duplicateReservation.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
 

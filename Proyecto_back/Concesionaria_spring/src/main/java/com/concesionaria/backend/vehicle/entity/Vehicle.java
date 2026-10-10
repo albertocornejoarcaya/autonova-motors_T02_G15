@@ -85,6 +85,14 @@ public class Vehicle {
         }
     }
 
+    public void restoreAvailabilityAfterCompletedReservation() {
+        if (stock != 0 || (!"Reservado".equalsIgnoreCase(status) && !"Vendido".equalsIgnoreCase(status))) {
+            throw new IllegalStateException("Vehicle is not awaiting reservation reconciliation");
+        }
+        stock++;
+        status = "Disponible";
+    }
+
     public void markSold() {
         if (stock != 0 || !"Reservado".equalsIgnoreCase(status)) {
             throw new IllegalStateException("Vehicle is not reserved for sale");

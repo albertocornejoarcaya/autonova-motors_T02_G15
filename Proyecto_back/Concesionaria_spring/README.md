@@ -83,6 +83,8 @@ jdbc:h2:file:./data/concesionaria
 -  Administración de usuarios.
 -  Contraseñas protegidas mediante BCrypt.
 
+Al concretar una reserva, el inventario libera la unidad; las reservas pendientes mantienen el vehículo bloqueado. El backend reconcilia al iniciar las unidades que quedaron como reservadas o vendidas por reservas ya concretadas.
+
 ## Roles
 
 | Rol | Acceso |

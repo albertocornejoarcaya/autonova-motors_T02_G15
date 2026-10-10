@@ -55,6 +55,7 @@ public class Reservation {
     }
     public void markCompleted() {
         ensurePending();
+        vehicle.releaseReservation();
         status = "Concretada";
     }
     public void cancel() {
